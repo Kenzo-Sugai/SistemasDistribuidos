@@ -1,0 +1,20 @@
+{
+    "Prod-00001": {
+        "Id": "00001",
+        "Nome": "Caderno",
+        "Preco": "30,00",
+        "Descricao": "Cardeno pautado em branco para estudos"
+    },
+    "Prod-00002": {
+        "Id": "00002",
+        "Nome": "Caneta",
+        "Preco": "5,00",
+        "Descricao": "Caneta com tinta azul"
+    },   
+    "Prod-00003": {
+        "Id": "00003",
+        "Nome": "Camiseta",
+        "Preco": "45,00",
+        "Descricao": "Camiseta preta basica sem estampa"
+    }
+}

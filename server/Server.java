@@ -19,7 +19,7 @@ public class Server {
             fromClient = in.readLine();
             System.out.println("recebido do cliente: " + fromClient);
  
-            if(fromClient.equals("Hello")) {
+            if(fromClient.equals("/produtosLista")) {
                 toClient = "Seja bem vindo";
                 System.out.println("enviado Seja bem vindo");
                 out.println(toClient);
