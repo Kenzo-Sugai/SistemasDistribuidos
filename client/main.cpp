@@ -1,30 +1,31 @@
 #include <iostream>
 #include "Carrinho.cpp"
 
-using namespace std;
-
-void tela(){
+void tela(Carrinho carrinho){
 
     int escolha;
 
     while(true){
 
-        cout << "Bem vindo ao E-Mazon" << endl;
-        cout << "Escolha uma opção:" << endl;
-        cout << "1. Visualizar Carrinho" << endl;
-        cout << "2. Adicionar Produto" << endl;
-        cout << "3. Remover Produto" << endl;
-        cout << "4. Sair" << endl;
+        std::cout << "Bem vindo ao E-Mazon" << std::endl;
+        std::cout << "Escolha uma opção:" << std::endl;
+        std::cout << "1. Visualizar Carrinho" << std::endl;
+        std::cout << "2. Adicionar Produto" << std::endl;
+        std::cout << "3. Remover Produto" << std::endl;
+        std::cout << "4. Sair" << std::endl;
 
-        cin >> escolha;
+        std::cin >> escolha;
 
         switch(escolha){
 
             case 1:
+                carrinho.visualizarCarrinho();
                 break;
             case 2:
+                return;
                 break;
             case 3:
+                return;
                 break;
             case 4:
                 return;
@@ -39,5 +40,5 @@ int main(){
 
     Carrinho *carrinho = new Carrinho();
 
-    tela();
+    tela(*carrinho);
 }

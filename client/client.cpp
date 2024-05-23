@@ -4,24 +4,28 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define SERVER_ADDRESS "192.168.0.31"
+#define SERVER_ADDRESS "192.168.68.112"
 #define SERVER_PORT 8080
 #define BUFFER_SIZE 1024
 
 class SocketClient {
 
+    private:
+
+        char buffer[BUFFER_SIZE] = {0};
+        int sock;
+
+
     public:
 
         SocketClient(){
-            
-            int sock = 0;
+
+            this->sock = 0;
             struct sockaddr_in server_address;
-            char buffer[BUFFER_SIZE] = {0};
 
             // Criar o socket
-            if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+            if ((this->sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
                 std::cerr << "Erro ao criar o socket" << std::endl;
-                return -1;
             }
 
             server_address.sin_family = AF_INET;
@@ -30,17 +34,18 @@ class SocketClient {
             // Converter endereço IPv4 do texto para binário
             if (inet_pton(AF_INET, SERVER_ADDRESS, &server_address.sin_addr) <= 0) {
                 std::cerr << "Endereço inválido ou não suportado" << std::endl;
-                return -1;
             }
 
             // Conectar ao servidor
-            if (connect(sock, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
+            if (connect(this->sock, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
                 std::cerr << "Falha na conexão" << std::endl;
-                return -1;
             }
 
-            const char *message = "Hello";
-            ssize_t sent_bytes = send(sock, message, strlen(message), 0);
+        }
+
+        char* socketReq(const char *message){
+
+            ssize_t sent_bytes = send(this->sock, message, strlen(message), 0);
             if (sent_bytes < 0) {
                 std::cerr << "Falha ao enviar a mensagem" << std::endl;
             } else {
@@ -48,10 +53,10 @@ class SocketClient {
             }
 
             // Usar shutdown para indicar que terminou de enviar
-            shutdown(sock, SHUT_WR);
+            shutdown(this->sock, SHUT_WR);
 
             // Ler a resposta do servidor
-            int bytes_read = read(sock, buffer, BUFFER_SIZE);
+            int bytes_read = read(this->sock, buffer, BUFFER_SIZE);
             if (bytes_read > 0) {
                 std::cout << "Resposta do servidor: " << buffer << std::endl;
             } else if (bytes_read == 0) {
@@ -61,6 +66,8 @@ class SocketClient {
             }
 
             // Fechar o socket
-            close(sock);
+            close(this->sock);
+
+            return buffer;
         }
-}
+};  
