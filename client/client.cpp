@@ -4,7 +4,11 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+<<<<<<< HEAD
 #define SERVER_ADDRESS "192.168.100.200"
+=======
+#define SERVER_ADDRESS "255.255.255.255"
+>>>>>>> ccda11240dfa2a174a64b3ba3b6a178a48a69388
 #define SERVER_PORT 8080
 #define BUFFER_SIZE 1024
 
