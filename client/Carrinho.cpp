@@ -1,8 +1,6 @@
 #include <iostream>
-//#include "../include/nlohmann/json.hpp"
-#include "Produto.cpp"
-#include "Client.cpp"
 #include "include/nlohmann/json.hpp"
+#include "Produto.cpp"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -14,47 +12,61 @@ class Carrinho {
 
     private:
 
-        int QuantidadeItens;
-        std::vector<Produto> ListaDeProdutos;
+        std::string usuario;
+        std::map<std::string, Produto> Produtos;
 
     public:
 
-        Carrinho(){
+        Carrinho(std::string usuario){
             
-            QuantidadeItens = 0;
-            //std::cout << prods;
-
+            this->usuario = usuario;
         }
 
-        void adicionarProduto(int ProductId, int Quantidade) {
+        std::string adicionarProduto(std::map<std::string, Produto> listaProdutos) {
 
-            std::string ProdutoNome = "prods[ProductId];";
+            std::string id;
+            int quantidade;
 
-            Produto *novoProduto = new Produto(ProdutoNome, Quantidade);
+            std::cout << "Qual Produto gostaria de adicionar ao Carrinho?" << std::endl;
+            
+            while(true){
+                std::cout << "Id: "; std::cin >> id;
+                if(listaProdutos[id].getNome() == ""){
+                    std::cout << "Produto inexistente" << std::endl;
+                }
+                else break;
+            }
 
-            ListaDeProdutos.push_back(*novoProduto);
+            std::cout << "Quantidade que gostaria de comprar?" << std::endl;
+
+            int estoque = listaProdutos[id].getEstoque();
+
+            while(true){
+                std::cout << "Quantidade disponível: " << std::to_string(estoque) << std::endl;
+                std::cout << "Quantidade:"; std::cin >> quantidade;
+
+                if(quantidade > estoque){
+                    std::cout << "ERRO: Quantidade indisponível" << std::endl;
+                }
+                else break;
+            }
+
+            std::string response = 
+                R"({"id":")" + id + 
+                R"(","quantidade":)" + std::to_string(quantidade) +  
+                R"(,"usuario":")" + this->usuario + R"("})";
+
+            std::cout << response << std::endl;
+
+            return response;
 
         }
 
         void removerProduto(){
-            std::cout << "Produto removido" << std::endl;
+       
         }
 
         void visualizarCarrinho(){
-            std::cout << "enviando requisicao para o servidor" << std::endl;
-            SocketClient *client = new SocketClient();
-
-            std::string produtosJson = std::string(client->socketReq("/produtosLista"));
-
-            std::cout << produtosJson << std::endl;
-
-            json Doc{json::parse(produtosJson)};
-
-            std::string nomeProduto{Doc["Prod-00001"]["Nome"]};
-
-            Doc.at("Prod-00001");
-
-            std::cout << "*" << std::endl;
-
+        
         }
 };

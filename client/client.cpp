@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define SERVER_ADDRESS "192.168.68.112"
+#define SERVER_ADDRESS "192.168.100.200"
 #define SERVER_PORT 8080
 #define BUFFER_SIZE 1024
 
@@ -58,7 +58,7 @@ class SocketClient {
             // Ler a resposta do servidor
             int bytes_read = read(this->sock, buffer, BUFFER_SIZE);
             if (bytes_read > 0) {
-                std::cout << "Resposta do servidor: " << buffer << std::endl;
+                //std::cout << "Mensagem recebida" << std::endl;
             } else if (bytes_read == 0) {
                 std::cerr << "Conexão fechada pelo servidor" << std::endl;
             } else {
