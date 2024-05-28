@@ -30,6 +30,10 @@ class Controller {
             
         }
 
+        int getQuantidadeCarrinho(){
+            return carr->getQntItens();
+        }
+
         void criarCarrinho(){
 
             std::string jsonUser = R"(/criarCarrinho {"usuario":")" + this->usuario + R"("})";
@@ -113,10 +117,14 @@ class Controller {
 
         void visualizarCarrinho(){
 
-            SocketClient *client = new SocketClient();
-            std::string req = client->socketReq("/visualizarCarrinho");
+            std::string jsonUser = R"(/visualizarCarrinho {"usuario":")" + this->usuario + R"("})";
 
-            std::cout << req <<std::endl;
+            const char* request = jsonUser.c_str();
+
+            SocketClient *client = new SocketClient();
+            std::string req = client->socketReq(request);
+
+            std::cout << req << std::endl;
 
             delete client;
 
@@ -124,8 +132,12 @@ class Controller {
 
         void finalizarCompra(){
 
+            std::string jsonUser = R"(/finalizarCompra {"usuario":")" + this->usuario + R"("})";
+
+            const char* request = jsonUser.c_str();
+
             SocketClient *client = new SocketClient();
-            std::string req = client->socketReq("/finalizarCompra");
+            std::string req = client->socketReq(request);
 
             delete client;
         }

@@ -32,6 +32,8 @@ void tela(Controller ctrl, std::string usuario){
 
     while(true){
 
+        int ind = 0;
+
         std::cout << "<-----> Bem vindo ao E-Mazon <----->" << std::endl;
         std::cout << "USUARIO: " << usuario << std::endl;
         std::cout << "Escolha uma opção:" << std::endl;
@@ -39,17 +41,27 @@ void tela(Controller ctrl, std::string usuario){
         std::cout << "2. Visualizar Carrinho" << std::endl;
         std::cout << "3. Adicionar Produto ao Carrinho" << std::endl;
         std::cout << "4. Admin" << std::endl;
-        std::cout << "5. Sair" << std::endl;
+        
+        if(ctrl.getQuantidadeCarrinho() > 0 ){ 
+            std::cout << "5. Finalizar compra" << std::endl;
+            std::cout << "6. Sair" << std::endl;
+        }
+        else{
+            std::cout << "5. Sair" << std::endl;
+        }
 
         std::cin >> escolha;
 
         switch(escolha){
 
             case 1: ctrl.visualizarProdutos(); break;
-            case 2: break;
+            case 2: ctrl.visualizarCarrinho(); break;
             case 3: ctrl.adicionarCarrinho(); break;
             case 4: telaAdmin(); break;
-            case 5: return;
+            case 5: 
+                if(ctrl.getQuantidadeCarrinho() > 0) { ctrl.finalizarCompra(); break; } else return;
+            case 6: 
+                if(ctrl.getQuantidadeCarrinho() > 0) { return; } else break;
         }
 
     }

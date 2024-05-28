@@ -14,12 +14,19 @@ class Carrinho {
 
         std::string usuario;
         std::map<std::string, Produto> Produtos;
+        int qntItens;
 
     public:
 
         Carrinho(std::string usuario){
             
             this->usuario = usuario;
+
+            this->qntItens = 0;
+        }
+
+        int getQntItens(){
+            return this->qntItens;
         }
 
         std::string adicionarProduto(std::map<std::string, Produto> listaProdutos) {
@@ -57,6 +64,8 @@ class Carrinho {
                 R"(,"usuario":")" + this->usuario + R"("})";
 
             std::cout << response << std::endl;
+
+            this->qntItens++;
 
             return response;
 
