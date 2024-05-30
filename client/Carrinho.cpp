@@ -29,6 +29,10 @@ class Carrinho {
             return this->qntItens;
         }
 
+        void resetCarrinho(){
+            this->qntItens = 0;
+        }
+
         std::string adicionarProduto(std::map<std::string, Produto> listaProdutos) {
 
             std::string id;
@@ -52,8 +56,9 @@ class Carrinho {
                 std::cout << "Quantidade disponível: " << std::to_string(estoque) << std::endl;
                 std::cout << "Quantidade:"; std::cin >> quantidade;
 
-                if(quantidade > estoque){
+                if(quantidade > estoque || estoque == 0){
                     std::cout << "ERRO: Quantidade indisponível" << std::endl;
+                    return "erro";
                 }
                 else break;
             }
@@ -63,19 +68,9 @@ class Carrinho {
                 R"(","quantidade":)" + std::to_string(quantidade) +  
                 R"(,"usuario":")" + this->usuario + R"("})";
 
-            std::cout << response << std::endl;
-
             this->qntItens++;
 
             return response;
 
-        }
-
-        void removerProduto(){
-       
-        }
-
-        void visualizarCarrinho(){
-        
         }
 };

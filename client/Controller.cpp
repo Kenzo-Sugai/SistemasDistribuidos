@@ -49,13 +49,13 @@ class Controller {
 
         void visualizarProdutos(){
 
-            //std::cout << "enviando requisicao para o servidor" << std::endl;
             SocketClient *client = new SocketClient();
             std::string req = client->socketReq("/produtosLista");
 
             json Produtos = json::parse(req);
 
             for (const auto& itemProduto : Produtos) {
+                if(itemProduto["Estoque"] == 0) std::cout << "X---X ESGOTADO X---X" << std::endl;
                 std::cout << "Produto: " << itemProduto["Id"] << std::endl;
                 std::cout << "Nome: " << itemProduto["Nome"] << std::endl;
                 std::cout << "Descricao: " << itemProduto["Descricao"] << std::endl;
@@ -70,7 +70,6 @@ class Controller {
 
         std::map<std::string, Produto> getProdutos(){
 
-            //std::cout << "enviando requisicao para o servidor" << std::endl;
             SocketClient *client = new SocketClient();
             std::string req = client->socketReq("/produtosLista");
 
@@ -103,6 +102,8 @@ class Controller {
 
             std::string produto = carr->adicionarProduto(listaProdutos);
 
+            if(produto == "erro") return;
+
             produto = "/adicionarCarrinho " + produto;
 
             const char* produtoChar = produto.c_str();
@@ -110,7 +111,7 @@ class Controller {
             SocketClient *client = new SocketClient();
             std::string req = client->socketReq(produtoChar);
 
-            std::cout << req <<std::endl;
+            std::cout << req << std::endl;
 
             delete client;
         }
@@ -130,6 +131,17 @@ class Controller {
 
         }
 
+        void visualizarExtrato(){
+
+            SocketClient *client = new SocketClient();
+            std::string req = client->socketReq("/visualizarExtrato");
+
+            std::cout << req << std::endl;
+
+            delete client;
+
+        }
+
         void finalizarCompra(){
 
             std::string jsonUser = R"(/finalizarCompra {"usuario":")" + this->usuario + R"("})";
@@ -139,8 +151,14 @@ class Controller {
             SocketClient *client = new SocketClient();
             std::string req = client->socketReq(request);
 
+            std::cout << req << std::endl;
+
+            carr->resetCarrinho();
+
             delete client;
+
         }
+
 
 
 

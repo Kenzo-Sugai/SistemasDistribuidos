@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>  
 
-void telaAdmin(){
+void telaAdmin(Controller ctrl){
 
     int escolha;
 
@@ -17,8 +17,8 @@ void telaAdmin(){
 
     switch(escolha){
 
-        case 1: break;
-        case 2: break;
+        case 1: ctrl.visualizarProdutos(); break;
+        case 2: ctrl.visualizarExtrato(); break;
         case 3: return;
 
     }
@@ -31,6 +31,8 @@ void tela(Controller ctrl, std::string usuario){
     int escolha;
 
     while(true){
+
+
 
         int ind = 0;
 
@@ -51,13 +53,14 @@ void tela(Controller ctrl, std::string usuario){
         }
 
         std::cin >> escolha;
+        system("clear");
 
         switch(escolha){
 
             case 1: ctrl.visualizarProdutos(); break;
             case 2: ctrl.visualizarCarrinho(); break;
             case 3: ctrl.adicionarCarrinho(); break;
-            case 4: telaAdmin(); break;
+            case 4: telaAdmin(ctrl); break;
             case 5: 
                 if(ctrl.getQuantidadeCarrinho() > 0) { ctrl.finalizarCompra(); break; } else return;
             case 6: 
@@ -76,7 +79,6 @@ int main(){
 
     std::string usuario = "USUARIO-"+std::to_string(user_code);
 
-    //Controller *ctrl = new Controller(usuario);
     Controller *ctrl = new Controller(usuario);
 
     ctrl->criarCarrinho();
