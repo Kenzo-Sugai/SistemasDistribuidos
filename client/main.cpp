@@ -32,8 +32,6 @@ void tela(Controller ctrl, std::string usuario){
 
     while(true){
 
-
-
         int ind = 0;
 
         std::cout << "<-----> Bem vindo ao E-Mazon <----->" << std::endl;
@@ -74,14 +72,18 @@ void tela(Controller ctrl, std::string usuario){
 int main(){
 
     srand (time(NULL));
+    int user_code;
 
-    int user_code = rand() % 10000;
+    std::cout << "Digite seu usuario:" << std::endl;
+    std::cin >> user_code;
+
+    //int user_code = rand() % 10000;
 
     std::string usuario = "USUARIO-"+std::to_string(user_code);
 
     Controller *ctrl = new Controller(usuario);
 
-    ctrl->criarCarrinho();
+    //ctrl->criarCarrinho();
 
     tela(*ctrl, usuario);
 

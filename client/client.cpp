@@ -4,9 +4,9 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define SERVER_ADDRESS "192.168.68.103"
+#define SERVER_ADDRESS "192.168.100.200"
 #define SERVER_PORT 8080
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 100000
 
 class SocketClient {
 
@@ -14,7 +14,6 @@ class SocketClient {
 
         char buffer[BUFFER_SIZE] = {0};
         int sock;
-
 
     public:
 
@@ -45,8 +44,6 @@ class SocketClient {
             ssize_t sent_bytes = send(this->sock, message, strlen(message), 0);
             if (sent_bytes < 0) {
                 std::cerr << "Falha ao enviar a mensagem" << std::endl;
-            } else {
-                std::cout << "Mensagem enviada" << std::endl;
             }
 
             shutdown(this->sock, SHUT_WR);
